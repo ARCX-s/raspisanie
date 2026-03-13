@@ -44,16 +44,17 @@ html {
   overflow: hidden;   /* предотвращаем скролл на уровне html */
   margin: 0;
   padding: 0;
+  background: var(--bg);
 }
 body {
-  height: 100%;
-  overflow: hidden; /* body сам не скроллится */
-  background: var(--bg);
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--bg); /* фон до самого низа */
   color: var(--t1);
-  transition: background .3s, color .3s;
-  padding-top: var(--sat);
-  padding-left: var(--sal);
-  padding-right: var(--sar);
+  overflow: hidden;
+  position: relative;
 }
 button { font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; user-select: none; border: none; background: none; }
 a { color: rgba(var(--acc),1); text-decoration: none; }
@@ -91,16 +92,17 @@ input { font-family: inherit; }
 
 /* ── Page (scrollable area) ─────────────────────── */
 .page {
-  position: fixed;
+  position: absolute;
   top: calc(var(--sat) + var(--nh));
   left: 0;
   right: 0;
-  bottom: 0; /* теперь page доходит до низа экрана */
+  bottom: 0;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   z-index: 1;
-  padding: 16px 14px 8px; /* внутренние отступы, не для safe area */
+  padding: 16px 14px 8px;
+  background: var(--bg); /* тоже фон для page */
 }
 /* max-width centering */
 .page > .view { max-width: 660px; margin: 0 auto; }
@@ -221,16 +223,16 @@ input { font-family: inherit; }
 /* ── Dock ───────────────────────────────────────── */
 .dock {
   position: fixed;
-  bottom: env(safe-area-inset-bottom); /* dock сверху бортика iOS */
+  bottom: env(safe-area-inset-bottom, 0); /* dock поверх бортика */
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000; /* поверх page */
+  z-index: 1000;
   display: flex;
   align-items: center;
   padding: 5px 8px;
   border-radius: 100px;
   gap: 2px;
-  background: rgba(255,255,255,0.85); /* прозрачный фон поверх контента */
+  background: rgba(255,255,255,0.85);
   box-shadow: 0 20px 60px rgba(0,0,0,.15), 0 4px 16px rgba(0,0,0,.08), inset 0 1px 0 rgba(255,255,255,.7);
 }
 [data-dark] .dock { box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 4px 16px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.05); }
