@@ -38,7 +38,7 @@ function parseCellText(text) {
 function parseCSV(csvText) {
   // Split rows, handle quoted fields
   const rows = [];
-  const lines = csvText.split('\n');
+  const lines = csvText.split(/\r?\n/);
   for (const line of lines) {
     const row = [];
     let cur = '', inQ = false;
