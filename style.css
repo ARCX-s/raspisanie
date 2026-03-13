@@ -74,18 +74,62 @@ input { font-family: inherit; }
 
 /* ── Nav ────────────────────────────────────────── */
 .nav {
-  position: fixed; top: var(--sat); left: 0; right: 0;
-  height: var(--nh); z-index: 500;
-  display: flex; align-items: center; justify-content: space-between;
+  position: fixed;
+  top: var(--sat);
+  left: 0;
+  right: 0;
+  height: var(--nh);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 0 14px;
-  background: var(--gf); backdrop-filter: var(--gbl); -webkit-backdrop-filter: var(--gbl);
-  border-bottom: 1.5px solid var(--gb);
-  box-shadow: 0 2px 20px rgba(0,0,0,.06);
-}
-.nav-left  { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; }
-.nav-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.nav-title { font-size: 17px; font-weight: 800; color: var(--t1); letter-spacing: -.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  
+  /* стеклянный градиентный фон */
+  background: linear-gradient(180deg, rgba(var(--acc),0.1) 0%, var(--gf) 100%);
+  backdrop-filter: var(--gbl) blur(24px);
+  -webkit-backdrop-filter: var(--gbl) blur(24px);
 
+  /* тень и границы */
+  border-bottom: 1.5px solid var(--gb);
+  box-shadow: 0 6px 28px rgba(0,0,0,.12);
+  border-radius: 0 0 18px 18px;
+  transition: background .3s, box-shadow .3s, border-color .3s;
+}
+
+/* тёмная тема */
+[data-dark] .nav {
+  background: linear-gradient(180deg, rgba(var(--acc),0.12) 0%, var(--gf) 100%);
+  border-bottom: 1.5px solid rgba(255,255,255,.08);
+  box-shadow: 0 6px 28px rgba(0,0,0,.45);
+}
+
+/* кнопки в шторке */
+.nav .ib {
+  background: rgba(var(--acc),0.05);
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+  transition: all .3s var(--sp);
+}
+.nav .ib:hover {
+  background: rgba(var(--acc),0.12);
+  transform: scale(1.08);
+  box-shadow: 0 6px 22px rgba(var(--acc),.2);
+}
+[data-dark] .nav .ib:hover {
+  background: rgba(var(--acc),0.2);
+}
+
+/* заголовок */
+.nav-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--t1);
+  letter-spacing: -.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color .3s;
+}
 /* ── Icon button ────────────────────────────────── */
 .ib { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--t1); transition: transform .22s var(--sp); flex-shrink: 0; }
 .ib:active { transform: scale(.78) !important; }
