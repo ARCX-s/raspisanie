@@ -94,14 +94,14 @@ input { font-family: inherit; }
 /* ── Page (scrollable area) ─────────────────────── */
 .page {
   position: absolute;
-  top: env(safe-area-inset-top);
+  top: calc(var(--sat) + var(--nh));
   left: 0;
   right: 0;
-  bottom: 0;          /* весь экран до нижней панели */
-  overflow-y: auto;   /* скролл только внутри page */
+  bottom: 0; /* полностью до низа */
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   z-index: 1;
-  padding: 16px 14px 8px; /* оставляем внутренние отступы контента */
+  padding: 16px 14px 8px; /* можно оставить, dock поверх */
 }
 /* max-width centering */
 .page > .view { max-width: 660px; margin: 0 auto; }
@@ -222,14 +222,17 @@ input { font-family: inherit; }
 /* ── Dock ───────────────────────────────────────── */
 .dock {
   position: fixed;
-  bottom: calc(var(--sab) + 10px);
-  left: 50%; transform: translateX(-50%);
-  z-index: 500;
-  display: flex; align-items: center;
+  bottom: env(safe-area-inset-bottom, 0);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
   padding: 5px 8px;
   border-radius: 100px;
   gap: 2px;
   box-shadow: 0 20px 60px rgba(0,0,0,.15), 0 4px 16px rgba(0,0,0,.08), inset 0 1px 0 rgba(255,255,255,.7);
+  background: var(--gf); 
 }
 [data-dark] .dock { box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 4px 16px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.05); }
 .db { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 7px 20px; border-radius: 100px; color: var(--t3); transition: color .2s, background .2s, transform .22s var(--sp); }
