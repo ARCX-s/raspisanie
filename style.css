@@ -339,7 +339,6 @@ input { font-family: inherit; }
   padding: 0 8px;
   transition: background .3s, box-shadow .3s;
   overflow: hidden;
-  position: relative;
 }
 
 [data-dark] .dock {
