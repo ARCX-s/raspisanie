@@ -75,7 +75,7 @@ input { font-family: inherit; }
 /* ── Nav ────────────────────────────────────────── */
 .nav {
   position: fixed;
-  top: 8px;                      /* отступ сверху */
+  top: 20px;                      /* отступ сверху */
   left: 8px;                     /* отступ слева */
   right: 8px;                    /* отступ справа */
   height: 48px;
