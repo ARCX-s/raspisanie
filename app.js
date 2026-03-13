@@ -289,3 +289,46 @@ window._scheduleLoaded = function() {
     if (selDay) renderSchedule();
   }
 };
+// ── iOS‑style Bottom Dock slider ─────────────────────────
+(function(){
+  const dock = document.querySelector('.dock');
+  if(!dock) return;
+  const slider = document.createElement('div');
+  slider.className = 'dock-slider';
+  dock.prepend(slider);
+
+  slider.style.position = 'absolute';
+  slider.style.top = '4px';
+  slider.style.height = 'calc(100% - 8px)';
+  slider.style.borderRadius = '28px';
+  slider.style.transition = 'transform .25s cubic-bezier(.34,1.56,.64,1), width .25s cubic-bezier(.34,1.56,.64,1), background .25s';
+  slider.style.zIndex = '1';
+  slider.style.pointerEvents = 'none';
+  slider.style.background = `rgba(var(--acc),0.2)`;
+
+  const updateSlider = () => {
+    const active = dock.querySelector('.db.on');
+    if(!active) return;
+    const rect = dock.getBoundingClientRect();
+    const aRect = active.getBoundingClientRect();
+    const left = aRect.left - rect.left + 4;
+    const width = aRect.width - 8;
+    slider.style.transform = `translateX(${left}px)`;
+    slider.style.width = `${width}px`;
+    slider.style.background = `rgba(var(--acc),0.2)`;
+  };
+
+  dock.querySelectorAll('.db').forEach(btn => {
+    btn.addEventListener('click', () => {
+      dock.querySelectorAll('.db').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      updateSlider();
+    });
+  });
+
+  window.addEventListener('resize', updateSlider);
+  setTimeout(updateSlider, 50);
+
+  const observer = new MutationObserver(updateSlider);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
+})();
