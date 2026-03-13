@@ -49,7 +49,39 @@
   <!-- HOME: group picker -->
   <div class="view on" id="view-home">
     <div class="hero">
-      <div class="hero-ico">📚</div>
+      <div class="hero-ico">
+  <svg width="72" height="72" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="gradX" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#0050FF">
+          <animate attributeName="stop-color" values="#0050FF;#8856D6;#34C759;#0050FF" dur="8s" repeatCount="indefinite"/>
+        </stop>
+        <stop offset="50%" stop-color="#8856D6">
+          <animate attributeName="stop-color" values="#8856D6;#34C759;#0050FF;#8856D6" dur="8s" repeatCount="indefinite"/>
+        </stop>
+        <stop offset="100%" stop-color="#34C759">
+          <animate attributeName="stop-color" values="#34C759;#0050FF;#8856D6;#34C759" dur="8s" repeatCount="indefinite"/>
+        </stop>
+      </linearGradient>
+      <filter id="glowX" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+
+    <g filter="url(#glowX)">
+      <line x1="20" y1="20" x2="108" y2="108" stroke="url(#gradX)" stroke-width="10" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate" from="0 64 64" to="360 64 64" dur="12s" repeatCount="indefinite"/>
+      </line>
+      <line x1="108" y1="20" x2="20" y2="108" stroke="url(#gradX)" stroke-width="10" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate" from="0 64 64" to="-360 64 64" dur="12s" repeatCount="indefinite"/>
+      </line>
+    </g>
+  </svg>
+</div>
       <div class="hero-h">Выбери свою группу</div>
       <div class="hero-s">ИИЭСМ · НИУ МГСУ</div>
     </div>
@@ -91,7 +123,7 @@
       <div class="legend">
         <div class="leg-item"><div class="leg-dot" style="background:#5856d6"></div>Лекция</div>
         <div class="leg-item"><div class="leg-dot" style="background:#ff2d55"></div>Практика</div>
-        <div class="leg-item"><div class="leg-dot" style="background:#ff9500"></div>Лаб</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#ff9500"></div>Лабораторная</div>
       </div>
     </div>
     <div class="disclaimer">
