@@ -73,41 +73,47 @@ input { font-family: inherit; }
 .g { background: var(--gf); backdrop-filter: var(--gbl); -webkit-backdrop-filter: var(--gbl); border: 1.5px solid var(--gb); box-shadow: var(--gs); }
 
 /* ── Nav ────────────────────────────────────────── */
+Ааааа, понял тебя, теперь мы говорим о вытянутых овалах, как в iOS26 — плашки и кнопки должны быть не просто круглыми, а длинными овалами, где ширина > высоты, и кнопки внутри тоже вытянутые, аккуратные, с blur и стеклом. 🔥
+
+Я подготовил полностью рабочий CSS для верхней шторки (nav) и нижнего dock, вытянутые овалы, кнопки тоже вытянутые.
+
+Верхняя шторка — вытянутый овал
 .nav {
   position: fixed;
-  top: var(--sat,0);
-  left: 0;
-  right: 0;
-  height: 44px;                         /* чуть тоньше */
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 44px;                  /* высота плашки */
+  min-width: 280px;
+  max-width: 600px;              /* ширина вытянутого овала */
   z-index: 500;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 12px;
 
-  background: rgba(var(--acc,0,122,255),0.06); /* лёгкий акцент */
+  background: rgba(var(--acc,0,122,255),0.06);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border-radius: 22px;                    /* полностью овальная шторка */
+  border-radius: 22px;           /* полностью вытянутый овал */
   box-shadow: 0 6px 28px rgba(0,0,0,.12);
   transition: background .3s, box-shadow .3s;
 }
 
-/* тёмная тема */
 [data-dark] .nav {
   background: rgba(var(--acc,0,122,255),0.12);
   box-shadow: 0 6px 28px rgba(0,0,0,.25);
 }
 
-/* кнопки в шторке — овальные */
 .nav .ib {
   all: unset;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 18px;               /* полностью овальная кнопка */
+  height: 32px;                  /* кнопка чуть меньше */
+  min-width: 64px;               /* вытянутый овал */
+  padding: 0 12px;
+  border-radius: 16px;           /* овал кнопки */
   cursor: pointer;
   color: var(--t3,#000);
   background: rgba(var(--acc,0,122,255),0.05);
@@ -117,7 +123,7 @@ input { font-family: inherit; }
 
 .nav .ib:hover {
   background: rgba(var(--acc,0,122,255),0.12);
-  transform: scale(1.08);
+  transform: scale(1.05);
   box-shadow: 0 4px 16px rgba(var(--acc,0,122,255),0.2),0 0 8px rgba(var(--acc,0,122,255),0.3);
 }
 
@@ -126,14 +132,12 @@ input { font-family: inherit; }
   box-shadow: 0 4px 16px rgba(var(--acc,0,122,255),0.3),0 0 12px rgba(var(--acc,0,122,255),0.4);
 }
 
-/* левый и правый блоки кнопок */
 .nav-left, .nav-right {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-/* заголовок */
 .nav-title {
   font-size: 17px;
   font-weight: 800;
@@ -318,13 +322,13 @@ input { font-family: inherit; }
   bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
-  height: 56px;
+  height: 56px;                     /* высота плашки */
   min-width: 280px;
-  max-width: 420px;
+  max-width: 500px;                  /* вытянутый овал */
   background: rgba(var(--acc,0,122,255),0.06);
   backdrop-filter: blur(28px) saturate(180%);
   -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border-radius: 28px;            /* полностью овальная плашка */
+  border-radius: 28px;               /* полностью овальная плашка */
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -334,19 +338,19 @@ input { font-family: inherit; }
   transition: background .3s, box-shadow .3s;
 }
 
-/* тёмная тема */
 [data-dark] .dock {
   background: rgba(var(--acc,0,122,255),0.12);
   box-shadow: 0 8px 32px rgba(0,0,0,.25);
 }
 
-/* кнопки dock — полностью овальные */
+/* кнопки dock — вытянутые оваллы */
 .dock .db {
   all: unset;
   flex: 1;
   margin: 0 4px;
-  height: 44px;
-  border-radius: 22px;         /* овальные кнопки */
+  height: 40px;                     /* чуть меньше высоты плашки */
+  min-width: 60px;                  /* вытянутый овал */
+  border-radius: 20px;              /* овал */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -359,7 +363,7 @@ input { font-family: inherit; }
 }
 
 .dock .db i {
-  font-size: 20px;
+  font-size: 18px;
   transition: all 0.25s;
 }
 
@@ -369,7 +373,7 @@ input { font-family: inherit; }
 }
 
 .dock .db:hover {
-  transform: scale(1.08);
+  transform: scale(1.05);
   background: rgba(var(--acc,0,122,255),0.08);
 }
 
