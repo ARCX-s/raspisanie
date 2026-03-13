@@ -75,61 +75,74 @@ input { font-family: inherit; }
 /* ── Nav ────────────────────────────────────────── */
 .nav {
   position: fixed;
-  top: 0;
+  top: var(--sat,0);
   left: 0;
   right: 0;
-  height: 44px;                  /* тонкая шторка */
-  padding: 0 12px;
+  height: 44px;                         /* чуть тоньше */
+  z-index: 500;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 12px;
+
+  background: rgba(var(--acc,0,122,255),0.06); /* лёгкий акцент */
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  background: rgba(255, 255, 255, 0.25); /* светлая тема */
-  z-index: 1000;
+  border-radius: 22px;                    /* полностью овальная шторка */
+  box-shadow: 0 6px 28px rgba(0,0,0,.12);
+  transition: background .3s, box-shadow .3s;
 }
 
+/* тёмная тема */
 [data-dark] .nav {
-  background: rgba(16, 16, 24, 0.6);      /* тёмная тема */
+  background: rgba(var(--acc,0,122,255),0.12);
+  box-shadow: 0 6px 28px rgba(0,0,0,.25);
 }
 
-.nav-left, .nav-right {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.nav-title {
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--t1, #000);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* кнопки в шторке */
-.nav button {
+/* кнопки в шторке — овальные */
+.nav .ib {
   all: unset;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 16px;
-  color: var(--t3, #000);
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;               /* полностью овальная кнопка */
   cursor: pointer;
+  color: var(--t3,#000);
+  background: rgba(var(--acc,0,122,255),0.05);
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
   transition: all 0.25s;
 }
 
-.nav button:active {
-  transform: scale(0.85);  /* эффект нажатия */
+.nav .ib:hover {
+  background: rgba(var(--acc,0,122,255),0.12);
+  transform: scale(1.08);
+  box-shadow: 0 4px 16px rgba(var(--acc,0,122,255),0.2),0 0 8px rgba(var(--acc,0,122,255),0.3);
 }
 
-/* иконки внутри кнопок */
-.nav button i {
+[data-dark] .nav .ib:hover {
+  background: rgba(var(--acc,0,122,255),0.2);
+  box-shadow: 0 4px 16px rgba(var(--acc,0,122,255),0.3),0 0 12px rgba(var(--acc,0,122,255),0.4);
+}
+
+/* левый и правый блоки кнопок */
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* заголовок */
+.nav-title {
   font-size: 17px;
-  pointer-events: none;
+  font-weight: 800;
+  color: var(--t1,#000);
+  letter-spacing: -.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color .3s;
 }
 /* ── Icon button ────────────────────────────────── */
 .ib { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--t1); transition: transform .22s var(--sp); flex-shrink: 0; }
@@ -302,68 +315,62 @@ input { font-family: inherit; }
 /* ── iOS‑style Bottom Dock ─────────────────────── */
 .dock {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 52px;                       /* тонкая плашка */
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 56px;
+  min-width: 280px;
+  max-width: 420px;
+  background: rgba(var(--acc,0,122,255),0.06);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border-radius: 28px;            /* полностью овальная плашка */
   display: flex;
   justify-content: space-around;
   align-items: center;
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  background: rgba(255, 255, 255, 0.25); /* светлая тема */
-  z-index: 1000;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  box-shadow: 0 -2px 12px rgba(0,0,0,.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,.16);
+  z-index: 500;
+  padding: 0 8px;
   transition: background .3s, box-shadow .3s;
 }
 
+/* тёмная тема */
 [data-dark] .dock {
-  background: rgba(16, 16, 24, 0.6);      /* тёмная тема */
-  box-shadow: 0 -2px 12px rgba(0,0,0,.25);
+  background: rgba(var(--acc,0,122,255),0.12);
+  box-shadow: 0 8px 32px rgba(0,0,0,.25);
 }
 
-.dock button.db {
+/* кнопки dock — полностью овальные */
+.dock .db {
   all: unset;
+  flex: 1;
+  margin: 0 4px;
+  height: 44px;
+  border-radius: 22px;         /* овальные кнопки */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
   cursor: pointer;
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  color: var(--t3, #000);
+  transition: all 0.25s;
+  color: var(--t3,#000);
+  font-size: 12px;
+  gap: 2px;
+}
+
+.dock .db i {
+  font-size: 20px;
   transition: all 0.25s;
 }
 
-.dock button.db i {
-  font-size: 18px;
-  pointer-events: none;
+.dock .db.on {
+  background: rgba(var(--acc,0,122,255),0.12);
+  color: rgba(var(--acc,0,122,255),1);
 }
 
-.dock button.db span {
-  font-size: 10px;
-  line-height: 1;
-  pointer-events: none;
-}
-
-/* активная кнопка */
-.dock button.db.on {
-  background: rgba(var(--acc, 0, 122, 255), 0.12);
-  color: rgba(var(--acc, 0, 122, 255), 1);
-}
-
-/* эффект нажатия */
-.dock button.db:active {
-  transform: scale(0.85);
-}
-
-/* hover для web (опционально, для ПК) */
-.dock button.db:hover {
-  background: rgba(var(--acc, 0, 122, 255), 0.08);
+.dock .db:hover {
+  transform: scale(1.08);
+  background: rgba(var(--acc,0,122,255),0.08);
 }
 
 /* кнопки внутри dock */
