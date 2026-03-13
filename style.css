@@ -114,10 +114,43 @@ input { font-family: inherit; }
 
 /* ── Hero ───────────────────────────────────────── */
 .hero { text-align: center; padding: 22px 0 20px; }
-.hero-ico { font-size: 52px; animation: hfl 3s ease-in-out infinite; display: block; margin-bottom: 10px; }
+
+/* анимация подпрыгивания */
 @keyframes hfl { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+
+/* иконка (теперь SVG логотип Xoras) */
+.hero-ico { font-size: 52px; display: block; margin-bottom: 10px; animation: hfl 3s ease-in-out infinite; }
+
+/* SVG логотип Xoras внутри hero-ico */
+.hero-ico svg { width: 72px; height: 72px; display: inline-block; }
+.hero-ico svg line { stroke-linecap: round; }
+.hero-ico svg line, .hero-ico svg path {
+  stroke-width: 2;
+  stroke: url(#gradX); /* плавный градиент */
+  stroke-linejoin: round;
+  fill: none;
+  animation: glowX 4s ease-in-out infinite alternate;
+}
+
+/* плавное свечение градиента */
+@keyframes glowX {
+  0% { filter: drop-shadow(0 0 6px rgba(var(--acc),0.5)); }
+  50% { filter: drop-shadow(0 0 14px rgba(var(--acc),0.7)); }
+  100% { filter: drop-shadow(0 0 6px rgba(var(--acc),0.5)); }
+}
+
 .hero-h { font-size: 22px; font-weight: 900; color: var(--t1); letter-spacing: -.4px; margin-bottom: 5px; }
 .hero-s { font-size: 13px; color: var(--t3); font-weight: 500; }
+
+/* градиент для SVG (можно менять под светлую/тёмную тему) */
+.hero-ico svg defs linearGradient#gradX stop:first-child { stop-color: #34C759; }
+.hero-ico svg defs linearGradient#gradX stop:nth-child(2) { stop-color: #007AFF; }
+.hero-ico svg defs linearGradient#gradX stop:nth-child(3) { stop-color: #8856D6; }
+
+/* тёмная тема градиент */
+[data-dark] .hero-ico svg defs linearGradient#gradX stop:first-child { stop-color: #34C759; }
+[data-dark] .hero-ico svg defs linearGradient#gradX stop:nth-child(2) { stop-color: #0050FF; }
+[data-dark] .hero-ico svg defs linearGradient#gradX stop:nth-child(3) { stop-color: #8856D6; }
 
 /* ── Dept sections ──────────────────────────────── */
 .dept-sec { margin-bottom: 20px; }
