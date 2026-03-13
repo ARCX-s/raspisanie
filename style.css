@@ -359,6 +359,48 @@ input { font-family: inherit; }
   z-index: 1;
 }
 
+/* ── iOS‑style Bottom Dock with sliding active background ── */
+.dock {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 56px;          /* высота плашки */
+  min-width: 280px;
+  max-width: 500px;
+  background: rgba(var(--acc,0,122,255),0.06);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border-radius: 28px;    /* полностью овальная плашка */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,.16);
+  z-index: 500;
+  padding: 0 8px;
+  transition: background .3s, box-shadow .3s;
+  position: relative;
+}
+
+/* тёмная тема */
+[data-dark] .dock {
+  background: rgba(var(--acc,0,122,255),0.12);
+  box-shadow: 0 8px 32px rgba(0,0,0,.25);
+}
+
+/* sliding background for active button */
+.dock-slider {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  width: 0;
+  background: rgba(var(--acc),0.2);
+  border-radius: 20px;
+  transition: all 0.25s cubic-bezier(.34,1.56,.64,1);
+  z-index: 1;
+}
+
 /* кнопки dock — вытянутые овалы */
 .dock .db {
   all: unset;
@@ -396,31 +438,12 @@ input { font-family: inherit; }
   background: rgba(var(--acc,0,122,255),0.08);
 }
 
-/* кнопки внутри dock */
-.db {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  padding: 8px 16px;
-  border-radius: 50px;
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--t3);
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid transparent;
-  transition: all .25s cubic-bezier(.34,1.56,.64,1);
-}
-
 [data-dark] .db {
   background: rgba(16,16,24,0.5);
   color: var(--t2);
 }
 
-/* активная кнопка */
+/* активная кнопка цвет + масштаб */
 .db.on {
   color: rgba(var(--acc),1);
   transform: scale(1.05);
