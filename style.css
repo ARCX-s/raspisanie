@@ -75,11 +75,11 @@ input { font-family: inherit; }
 /* ── Nav ────────────────────────────────────────── */
 .nav {
   position: fixed;
-  top: 20px;                      /* отступ сверху */
-  left: 8px;                     /* отступ слева */
-  right: 8px;                    /* отступ справа */
+  top: calc(env(safe-area-inset-top, 20px));
+  left: 8px;
+  right: 8px;
   height: 48px;
-  z-index: 600;                  /* выше dock */
+  z-index: 600;
   display: flex;
   align-items: center;
   justify-content: space-between;
