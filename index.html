@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Расписание">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#007aff">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Расписание пар</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="orbs" aria-hidden="true">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+</div>
+
+<!-- Top nav -->
+<nav class="nav">
+  <div class="nav-left">
+    <button class="ib g" id="btn-back" style="display:none" onclick="goHome()">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <span class="nav-title" id="nav-title">Расписание пар</span>
+  </div>
+  <div class="nav-right">
+    <button class="ib g" id="btn-theme"><i class="fa-solid fa-moon"></i></button>
+    <button class="ib g" id="btn-color"><i class="fa-solid fa-palette"></i></button>
+  </div>
+</nav>
+
+<!-- Color panel -->
+<div class="cpanel g" id="cpanel">
+  <div class="cp-title">Цвет акцента</div>
+  <div id="swatches"></div>
+</div>
+
+<!-- Scrollable page content -->
+<div class="page" id="page">
+
+  <!-- HOME: group picker -->
+  <div class="view on" id="view-home">
+    <div class="hero">
+      <div class="hero-ico">📚</div>
+      <div class="hero-h">Выбери свою группу</div>
+      <div class="hero-s">ИИЭСМ · НИУ МГСУ</div>
+    </div>
+    <div id="groups-wrap"></div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <div class="view" id="view-sched">
+    <div class="week-bar">
+      <button class="wt on" data-w="odd">Нечётная</button>
+      <button class="wt"    data-w="even">Чётная</button>
+    </div>
+    <div class="day-scroll-wrap">
+      <div class="day-tabs" id="day-tabs"></div>
+    </div>
+    <div id="sched-out"></div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="view" id="view-search">
+    <div class="search-wrap">
+      <i class="fa-solid fa-magnifying-glass search-ico"></i>
+      <input class="search-inp g" type="search" id="sinput"
+        placeholder="Предмет, преподаватель, аудитория…"
+        autocomplete="off" spellcheck="false">
+    </div>
+    <div id="search-out">
+      <div class="empty"><div class="empty-ico">🔍</div>Начни вводить...</div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="view" id="view-about">
+    <div class="about-card g">
+      <div class="about-title">О сайте</div>
+      <p class="about-text">Неофициальное расписание для студентов <strong>ИИЭСМ</strong>. Сделано студентом для студентов.</p>
+      <p class="about-text">Автор: <a href="https://t.me/dev25" target="_blank">@dev25</a></p>
+      <p class="about-text">Группы: <strong>ВиВ · ТГВ · ТЭОЖКХ · ГСХ · ЦиАТП · ПТСДСиО</strong></p>
+      <div class="legend">
+        <div class="leg-item"><div class="leg-dot" style="background:#5856d6"></div>Лекция</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#ff2d55"></div>Практика</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#ff9500"></div>Лаб</div>
+      </div>
+    </div>
+    <div class="disclaimer">
+      <strong>⚠️ Правовая информация.</strong>
+      Неофициальный студенческий ресурс, не аффилирован с НИУ МГСУ, не использует товарных знаков вуза.
+      За актуальность расписания ответственность не несётся.
+      <br><br>© 2025 <a href="https://t.me/dev25" target="_blank">@dev25</a>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- Bottom dock -->
+<nav class="dock g">
+  <button class="db" data-v="view-home">
+    <i class="fa-solid fa-house"></i><span>Группы</span>
+  </button>
+  <button class="db on" data-v="view-sched">
+    <i class="fa-solid fa-calendar-days"></i><span>Расписание</span>
+  </button>
+  <button class="db" data-v="view-search">
+    <i class="fa-solid fa-magnifying-glass"></i><span>Поиск</span>
+  </button>
+  <button class="db" data-v="view-about">
+    <i class="fa-solid fa-circle-info"></i><span>О сайте</span>
+  </button>
+</nav>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
