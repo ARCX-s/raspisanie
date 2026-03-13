@@ -73,51 +73,51 @@ input { font-family: inherit; }
 .g { background: var(--gf); backdrop-filter: var(--gbl); -webkit-backdrop-filter: var(--gbl); border: 1.5px solid var(--gb); box-shadow: var(--gs); }
 
 /* ── Nav ────────────────────────────────────────── */
-Ааааа, понял тебя, теперь мы говорим о вытянутых овалах, как в iOS26 — плашки и кнопки должны быть не просто круглыми, а длинными овалами, где ширина > высоты, и кнопки внутри тоже вытянутые, аккуратные, с blur и стеклом. 🔥
-
-Я подготовил полностью рабочий CSS для верхней шторки (nav) и нижнего dock, вытянутые овалы, кнопки тоже вытянутые.
-
-Верхняя шторка — вытянутый овал
 .nav {
   position: fixed;
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 44px;                  /* высота плашки */
-  min-width: 280px;
-  max-width: 600px;              /* ширина вытянутого овала */
+  top: 8px;                      /* отступ сверху */
+  left: 8px;                     /* отступ слева */
+  right: 8px;                    /* отступ справа */
+  height: 48px;                  /* высота прямоугольника */
   z-index: 500;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 12px;
 
+  /* прозрачная-матовая подложка */
   background: rgba(var(--acc,0,122,255),0.06);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border-radius: 22px;           /* полностью вытянутый овал */
-  box-shadow: 0 6px 28px rgba(0,0,0,.12);
+  
+  /* округлые края */
+  border-radius: 14px;
+
+  /* тень для объёма */
+  box-shadow: 0 4px 24px rgba(0,0,0,.12);
   transition: background .3s, box-shadow .3s;
 }
 
+/* тёмная тема */
 [data-dark] .nav {
   background: rgba(var(--acc,0,122,255),0.12);
-  box-shadow: 0 6px 28px rgba(0,0,0,.25);
+  box-shadow: 0 4px 24px rgba(0,0,0,.25);
 }
 
+/* кнопки в шторке */
 .nav .ib {
   all: unset;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 32px;                  /* кнопка чуть меньше */
-  min-width: 64px;               /* вытянутый овал */
+  height: 36px;                 /* чуть меньше высоты шторки */
+  min-width: 64px;              /* вытянутый овал для кнопки */
   padding: 0 12px;
-  border-radius: 16px;           /* овал кнопки */
+  border-radius: 12px;          /* овал кнопки */
   cursor: pointer;
   color: var(--t3,#000);
   background: rgba(var(--acc,0,122,255),0.05);
-  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+  box-shadow: 0 2px 12px rgba(0,0,0,.08);
   transition: all 0.25s;
 }
 
@@ -132,12 +132,14 @@ input { font-family: inherit; }
   box-shadow: 0 4px 16px rgba(var(--acc,0,122,255),0.3),0 0 12px rgba(var(--acc,0,122,255),0.4);
 }
 
+/* выравнивание блоков */
 .nav-left, .nav-right {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
+/* заголовок */
 .nav-title {
   font-size: 17px;
   font-weight: 800;
@@ -322,13 +324,13 @@ input { font-family: inherit; }
   bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
-  height: 56px;                     /* высота плашки */
+  height: 56px;
   min-width: 280px;
-  max-width: 500px;                  /* вытянутый овал */
+  max-width: 500px;
   background: rgba(var(--acc,0,122,255),0.06);
   backdrop-filter: blur(28px) saturate(180%);
   -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border-radius: 28px;               /* полностью овальная плашка */
+  border-radius: 28px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -336,6 +338,8 @@ input { font-family: inherit; }
   z-index: 500;
   padding: 0 8px;
   transition: background .3s, box-shadow .3s;
+  overflow: hidden;
+  position: relative;
 }
 
 [data-dark] .dock {
@@ -343,14 +347,26 @@ input { font-family: inherit; }
   box-shadow: 0 8px 32px rgba(0,0,0,.25);
 }
 
-/* кнопки dock — вытянутые оваллы */
+/* плавный слайдер активной кнопки */
+.dock .db-slider {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  width: calc(100% / 4 - 8px); /* подстрой под кол-во кнопок */
+  background: rgba(var(--acc),0.2);
+  border-radius: 20px;
+  transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  z-index: 1;
+}
+
+/* кнопки dock — вытянутые овалы */
 .dock .db {
   all: unset;
   flex: 1;
   margin: 0 4px;
-  height: 40px;                     /* чуть меньше высоты плашки */
-  min-width: 60px;                  /* вытянутый овал */
-  border-radius: 20px;              /* овал */
+  height: 40px;
+  min-width: 60px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -360,6 +376,8 @@ input { font-family: inherit; }
   color: var(--t3,#000);
   font-size: 12px;
   gap: 2px;
+  position: relative;
+  z-index: 2;
 }
 
 .dock .db i {
@@ -367,9 +385,10 @@ input { font-family: inherit; }
   transition: all 0.25s;
 }
 
-.dock .db.on {
-  background: rgba(var(--acc,0,122,255),0.12);
-  color: rgba(var(--acc,0,122,255),1);
+.dock .db span {
+  font-size: 10px;
+  font-weight: 700;
+  transition: all 0.25s;
 }
 
 .dock .db:hover {
@@ -395,6 +414,7 @@ input { font-family: inherit; }
   border: 1px solid transparent;
   transition: all .25s cubic-bezier(.34,1.56,.64,1);
 }
+
 [data-dark] .db {
   background: rgba(16,16,24,0.5);
   color: var(--t2);
@@ -402,10 +422,7 @@ input { font-family: inherit; }
 
 /* активная кнопка */
 .db.on {
-  background: rgba(var(--acc),0.2);
   color: rgba(var(--acc),1);
-  border: 1.5px solid rgba(var(--acc),0.5);
-  box-shadow: 0 4px 20px rgba(var(--acc),0.35);
   transform: scale(1.05);
 }
 
