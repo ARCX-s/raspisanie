@@ -78,42 +78,34 @@ input { font-family: inherit; }
   top: 8px;                      /* отступ сверху */
   left: 8px;                     /* отступ слева */
   right: 8px;                    /* отступ справа */
-  height: 48px;                  /* высота прямоугольника */
-  z-index: 500;
+  height: 48px;
+  z-index: 600;                  /* выше dock */
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 12px;
-
-  /* прозрачная-матовая подложка */
   background: rgba(var(--acc,0,122,255),0.06);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  
-  /* округлые края */
   border-radius: 14px;
-
-  /* тень для объёма */
   box-shadow: 0 4px 24px rgba(0,0,0,.12);
   transition: background .3s, box-shadow .3s;
 }
 
-/* тёмная тема */
 [data-dark] .nav {
   background: rgba(var(--acc,0,122,255),0.12);
   box-shadow: 0 4px 24px rgba(0,0,0,.25);
 }
 
-/* кнопки в шторке */
+/* кнопки в шторке — круглые */
 .nav .ib {
   all: unset;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 36px;                 /* чуть меньше высоты шторки */
-  min-width: 64px;              /* вытянутый овал для кнопки */
-  padding: 0 12px;
-  border-radius: 12px;          /* овал кнопки */
+  width: 36px;                 /* ширина = высоте для круга */
+  height: 36px;                /* высота кнопки */
+  border-radius: 50%;          /* полностью круглая */
   cursor: pointer;
   color: var(--t3,#000);
   background: rgba(var(--acc,0,122,255),0.05);
