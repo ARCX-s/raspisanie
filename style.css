@@ -364,21 +364,19 @@ input { font-family: inherit; }
   bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
-  height: 56px;          /* высота плашки */
-  min-width: 280px;
-  max-width: 500px;
-  background: rgba(var(--acc,0,122,255),0.06);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border-radius: 28px;    /* полностью овальная плашка */
+  z-index: 500;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  box-shadow: 0 8px 32px rgba(0,0,0,.16);
-  z-index: 500;
+  height: 56px;
+  min-width: 280px;
+  max-width: 500px;
+  border-radius: 28px;
+  background: rgba(var(--acc,0,122,255),0.06);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
   padding: 0 8px;
-  transition: background .3s, box-shadow .3s;
-  position: relative;
+  overflow: hidden;
 }
 
 /* тёмная тема */
@@ -387,17 +385,17 @@ input { font-family: inherit; }
   box-shadow: 0 8px 32px rgba(0,0,0,.25);
 }
 
-/* sliding background for active button */
 .dock-slider {
   position: absolute;
-  top: 4px;
-  bottom: 4px;
+  top: 4px;      /* немного отступ сверху плашки */
+  bottom: 4px;   /* немного отступ снизу плашки */
   left: 0;
-  width: 0;
+  width: 0;      /* JS потом устанавливает нужную ширину */
   background: rgba(var(--acc),0.2);
   border-radius: 20px;
   transition: all 0.25s cubic-bezier(.34,1.56,.64,1);
   z-index: 1;
+  pointer-events: none; /* чтобы не мешал клику по кнопкам */
 }
 
 /* кнопки dock — вытянутые овалы */
