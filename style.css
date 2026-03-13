@@ -302,25 +302,68 @@ input { font-family: inherit; }
 /* ── iOS‑style Bottom Dock ─────────────────────── */
 .dock {
   position: fixed;
-  bottom: env(safe-area-inset-bottom, 10px);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 52px;                       /* тонкая плашка */
   display: flex;
-  gap: 8px;
-  padding: 6px 12px;
-  border-radius: 50px;
-  background: rgba(255,255,255,0.3); /* стеклянное матовое */
+  justify-content: space-around;
+  align-items: center;
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255,255,255,0.2);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  transition: all .3s;
+  background: rgba(255, 255, 255, 0.25); /* светлая тема */
+  z-index: 1000;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  box-shadow: 0 -2px 12px rgba(0,0,0,.08);
+  transition: background .3s, box-shadow .3s;
 }
+
 [data-dark] .dock {
-  background: rgba(16,16,24,0.6);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  background: rgba(16, 16, 24, 0.6);      /* тёмная тема */
+  box-shadow: 0 -2px 12px rgba(0,0,0,.25);
+}
+
+.dock button.db {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  color: var(--t3, #000);
+  transition: all 0.25s;
+}
+
+.dock button.db i {
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.dock button.db span {
+  font-size: 10px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* активная кнопка */
+.dock button.db.on {
+  background: rgba(var(--acc, 0, 122, 255), 0.12);
+  color: rgba(var(--acc, 0, 122, 255), 1);
+}
+
+/* эффект нажатия */
+.dock button.db:active {
+  transform: scale(0.85);
+}
+
+/* hover для web (опционально, для ПК) */
+.dock button.db:hover {
+  background: rgba(var(--acc, 0, 122, 255), 0.08);
 }
 
 /* кнопки внутри dock */
