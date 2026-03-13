@@ -314,25 +314,26 @@ input { font-family: inherit; }
   z-index: 1000;
   display: flex;
   align-items: center;
-  padding: 5px 8px;
+  padding: 6px 10px;
   border-radius: 100px;
-  gap: 2px;
+  gap: 4px;
 
-  /* стеклянная плашка iOS 26 */
-  background: rgba(255,255,255,0.2);        
+  background: rgba(255,255,255,0.15); /* матовая прозрачность */
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1.5px solid rgba(255,255,255,0.3);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.08);
 
   transition: background .3s, box-shadow .3s, border-color .3s;
 }
+
 [data-dark] .dock {
   background: rgba(16,16,24,0.5);
-  border: 1.5px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 12px 36px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.05);
 }
 
+/* ── Кнопки внутри dock ───────────────────────────────────────── */
 .db {
   display: flex;
   flex-direction: column;
@@ -341,18 +342,36 @@ input { font-family: inherit; }
   padding: 7px 20px;
   border-radius: 100px;
   color: var(--t3);
-  transition: color .2s, background .2s, transform .22s var(--sp);
-}
-.db.on {
-  background: rgba(255,255,255,0.2);  /* стекло для активной кнопки */
+  background: rgba(255,255,255,0.15);  /* начальный стеклянный фон */
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
+  transition: all .22s var(--sp);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.db.on {
+  background: rgba(255,255,255,0.25); /* активная стеклянная подсветка */
   color: rgba(var(--acc),1);
   transform: scale(1.05);
-  box-shadow: 0 8px 24px rgba(var(--acc),.2), inset 0 1px 0 rgba(255,255,255,.1);
+  box-shadow: 0 6px 24px rgba(var(--acc),.2), inset 0 1px 0 rgba(255,255,255,.12);
 }
-.db:active { transform: scale(.80) !important; }
-.db i    { font-size: 19px; line-height: 1; }
+
+.db:active {
+  transform: scale(0.95); /* нажатие без серого overlay */
+  background: rgba(255,255,255,0.25);
+}
+
+[data-dark] .db {
+  background: rgba(16,16,24,0.4);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+[data-dark] .db.on {
+  background: rgba(16,16,24,0.6);
+  box-shadow: 0 6px 24px rgba(var(--acc),.3), inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+.db i { font-size: 19px; line-height: 1; }
 .db span { font-size: 10px; font-weight: 700; }
 /* ── Color panel ────────────────────────────────── */
 .cpanel {
