@@ -65,11 +65,11 @@ function showView(id){
   // back button only on schedule view when group selected
   const showBack=(id==='view-sched'&&selGroup);
   $('btn-back').style.display=showBack?'flex':'none';
-  $('nav-title').textContent=id==='view-sched'&&selGroup?getGroupLabel():'Расписание пар';
+  $('nav-title').textContent=id==='view-sched'&&selGroup?getGroupLabel():'Xoras';
 }
 function getGroupLabel(){
   const g=D.groups.find(x=>x.id===selGroup);
-  return g?`${g.num} · ${g.dept}`:'Расписание';
+  return g?`${g.num} · ${g.dept}`:'Xoras';
 }
 function goHome(){
   showView('view-home');
