@@ -40,17 +40,19 @@ html {
   font-family: 'Inter', -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* prevent iOS bounce on html level */
-  overflow: hidden;
   height: 100%;
+  overflow: hidden;   /* предотвращаем скролл на уровне html */
+  margin: 0;
+  padding: 0;
 }
 body {
   background: var(--bg);
   color: var(--t1);
   height: 100%;
-  overflow: hidden; /* body itself doesn't scroll */
+  overflow: hidden;   /* body не скроллится */
+  margin: 0;
+  padding: 0;         /* убрали padding-bottom, чтобы не оставался бортик */
   transition: background .3s, color .3s;
-  /* iPhone notch/home bar padding */
   padding-top: var(--sat);
   padding-left: var(--sal);
   padding-right: var(--sar);
@@ -91,15 +93,15 @@ input { font-family: inherit; }
 
 /* ── Page (scrollable area) ─────────────────────── */
 .page {
-  position: fixed;
-  top: calc(var(--sat) + var(--nh));
-  left: 0; right: 0;
-  bottom: calc(var(--sab) + var(--dh));
-  overflow-y: auto;
-  overflow-x: hidden;
+  position: absolute;
+  top: env(safe-area-inset-top);
+  left: 0;
+  right: 0;
+  bottom: 0;          /* весь экран до нижней панели */
+  overflow-y: auto;   /* скролл только внутри page */
   -webkit-overflow-scrolling: touch;
   z-index: 1;
-  padding: 16px 14px 8px;
+  padding: 16px 14px 8px; /* оставляем внутренние отступы контента */
 }
 /* max-width centering */
 .page > .view { max-width: 660px; margin: 0 auto; }
