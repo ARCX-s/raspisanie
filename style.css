@@ -309,64 +309,63 @@ input { font-family: inherit; }
 /* ── iOS‑style Bottom Dock ─────────────────────── */
 .dock {
   position: fixed;
-  bottom: env(safe-area-inset-bottom, 0px);
+  bottom: env(safe-area-inset-bottom, 10px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
   display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 10px;
-  border-radius: 30px;
-
-  background: rgba(255,255,255,0.18);
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 50px;
+  background: rgba(255,255,255,0.3); /* стеклянное матовое */
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255,255,255,0.36);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.10);
-  transition: background .3s, border-color .3s, box-shadow .3s;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  transition: all .3s;
 }
-
 [data-dark] .dock {
-  background: rgba(16,16,24,0.45);
-  border: 1px solid rgba(255,255,255,0.10);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.05);
+  background: rgba(16,16,24,0.6);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
 }
 
-/* ── Buttons ─────────────────────────── */
+/* кнопки внутри dock */
 .db {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 2px;
-  padding: 7px 18px;
-  border-radius: 100px;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 10px;
+  font-weight: 700;
   color: var(--t3);
-  background: transparent;
-  transition: all .28s cubic-bezier(.34,1.56,.64,1);
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid transparent;
+  transition: all .25s cubic-bezier(.34,1.56,.64,1);
+}
+[data-dark] .db {
+  background: rgba(16,16,24,0.5);
+  color: var(--t2);
 }
 
-.db i { font-size: 19px; line-height: 1; }
-.db span { font-size: 10px; font-weight: 700; }
-
-/* ── Active Button ───────────────────── */
+/* активная кнопка */
 .db.on {
+  background: rgba(var(--acc),0.2);
   color: rgba(var(--acc),1);
-  background: rgba(255,255,255,0.30);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-radius: 100px;
-  box-shadow: 0 4px 18px rgba(var(--acc),0.25), inset 0 1px 1px rgba(255,255,255,0.25);
-  transform: scale(1.06);
+  border: 1.5px solid rgba(var(--acc),0.5);
+  box-shadow: 0 4px 20px rgba(var(--acc),0.35);
+  transform: scale(1.05);
 }
 
-[data-dark] .db.on {
-  background: rgba(16,16,24,0.6);
-  box-shadow: 0 4px 18px rgba(var(--acc),0.35), inset 0 1px 1px rgba(255,255,255,0.10);
-}
-
-/* ── Tap effect ───────────────────────── */
-.db:active { transform: scale(0.95); }
+/* клик / анимация */
+.db:active { transform: scale(.85) !important; }
+.db i { font-size: 20px; }
+.db span { font-size: 10px; }
 /* ── Color panel ────────────────────────────────── */
 .cpanel {
   position: fixed;
