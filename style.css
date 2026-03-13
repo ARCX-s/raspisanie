@@ -78,15 +78,15 @@ input { font-family: inherit; }
   top: var(--sat);
   left: 0;
   right: 0;
-  height: var(--nh);
+  height: var(--nh);         /* фиксированная высота */
   z-index: 500;
   display: flex;
-  align-items: center;
+  align-items: center;       /* вертикальное центрирование */
   justify-content: space-between;
   padding: 0 14px;
-  
-  /* стеклянный градиентный фон */
-  background: linear-gradient(180deg, rgba(var(--acc),0.1) 0%, var(--gf) 100%);
+
+  /* стеклянный градиент с лёгким glow */
+  background: linear-gradient(180deg, rgba(var(--acc),0.08) 0%, var(--gf) 100%);
   backdrop-filter: var(--gbl) blur(24px);
   -webkit-backdrop-filter: var(--gbl) blur(24px);
 
@@ -104,7 +104,7 @@ input { font-family: inherit; }
   box-shadow: 0 6px 28px rgba(0,0,0,.45);
 }
 
-/* кнопки в шторке */
+/* кнопки в шторке — glow при наведении */
 .nav .ib {
   background: rgba(var(--acc),0.05);
   box-shadow: 0 4px 16px rgba(0,0,0,.08);
@@ -113,10 +113,18 @@ input { font-family: inherit; }
 .nav .ib:hover {
   background: rgba(var(--acc),0.12);
   transform: scale(1.08);
-  box-shadow: 0 6px 22px rgba(var(--acc),.2);
+  box-shadow: 0 6px 22px rgba(var(--acc),.2), 0 0 8px rgba(var(--acc),.3);
 }
 [data-dark] .nav .ib:hover {
   background: rgba(var(--acc),0.2);
+  box-shadow: 0 6px 22px rgba(var(--acc),.3), 0 0 12px rgba(var(--acc),.4);
+}
+
+/* гарантируем правильное выравнивание кнопок */
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;       /* вертикальное центрирование */
+  gap: 8px;
 }
 
 /* заголовок */
