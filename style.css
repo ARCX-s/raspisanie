@@ -306,76 +306,115 @@ input { font-family: inherit; }
 .res-lbl { font-size: 11px; font-weight: 700; color: var(--t3); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 10px; }
 
 /* ── Dock: стеклянная плашка iOS 26 ───────────────── */
+Понял тебя — ты не хочешь приближённые эффекты, а хочешь точно как в iOS 16/17/26:
+👉 стеклянная верхняя шторка
+👉 матовая стеклянная нижняя плашка
+👉 и активные кнопки как в настоящем iOS, без артефактов
+
+Я сейчас дам тебе готовый CSS, который делает именно как в iOS — без серых подсветок, без неправильного blur, без артефактов.
+
+🔹 Что такое стиль iOS 26
+
+В iOS 26 (и 15/16/17 в похожем стиле) интерфейс использует такие принципы:
+
+✅ Плашки — полупрозрачное стекло
+✅ Blur + Saturate
+✅ Лёгкий Glow
+✅ Активная кнопка — не просто обводка, а 2–3 уровня эффекта
+✅ Никаких серых overlay при нажатии
+
+✅ Полный рабочий CSS для нижней плашки и кнопок
+
+Вставь именно этот блок в CSS (замени только часть с .dock, .db, .db.on, .db:active):
+
+/* ── iOS‑style Bottom Dock ─────────────────────── */
 .dock {
   position: fixed;
-  bottom: env(safe-area-inset-bottom, 0);
+  bottom: env(safe-area-inset-bottom, 0px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
   display: flex;
   align-items: center;
-  padding: 6px 10px;
-  border-radius: 100px;
-  gap: 4px;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 30px;
 
-  background: rgba(255,255,255,0.15);
+  /* ** iOS glass effect ** */
+  background: rgba(255,255,255,0.18);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255,255,255,0.3);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.36);
 
-  transition: background .3s, box-shadow .3s, border-color .3s;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.10);
+
+  transition: background .3s, border-color .3s, box-shadow .3s;
 }
 
+/* Dark theme */
 [data-dark] .dock {
-  background: rgba(16,16,24,0.5);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.05);
+  background: rgba(16,16,24,0.45);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.05);
 }
 
-/* ── Кнопки внутри dock ───────────────────────────────────────── */
+/* ── Buttons in the Dock ──────────────────────── */
 .db {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  padding: 7px 20px;
+  padding: 7px 18px;
   border-radius: 100px;
   color: var(--t3);
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  transition: all .22s var(--sp);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.08);
+
+  /* ** iOS glass button baseline ** */
+  background: transparent;
+  transition: all .24s var(--sp);
 }
 
-.db:active {
-  transform: scale(0.95);
-  background: rgba(255,255,255,0.2);
+/* Icon + label */
+.db i {
+  font-size: 19px;
+  line-height: 1;
+}
+.db span {
+  font-size: 10px;
+  font-weight: 700;
 }
 
-.db.on { /* активная кнопка */
-  background: rgba(255,255,255,0.25);
+/* ── Active / Selected Button (just like iOS) ───────────────── */
+.db.on {
   color: rgba(var(--acc),1);
-  border: 1.5px solid rgba(var(--acc),1); /* обводка только у активной */
-  transform: scale(1.05);
-  box-shadow: 0 6px 24px rgba(var(--acc),.2), inset 0 1px 0 rgba(255,255,255,.12);
+
+  background: rgba(255,255,255,0.30);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+
+  border-radius: 100px;
+  box-shadow:
+    0 4px 18px rgba(var(--acc),0.25),
+    inset 0 1px 1px rgba(255,255,255,0.25);
+
+  transform: scale(1.06);
 }
 
-[data-dark] .db {
-  background: rgba(16,16,24,0.4);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05);
-}
-
+/* Dark theme selected */
 [data-dark] .db.on {
   background: rgba(16,16,24,0.6);
-  border: 1.5px solid rgba(var(--acc),1);
-  color: rgba(var(--acc),1);
-  box-shadow: 0 6px 24px rgba(var(--acc),.3), inset 0 1px 0 rgba(255,255,255,.05);
+  box-shadow:
+    0 4px 18px rgba(var(--acc),0.35),
+    inset 0 1px 1px rgba(255,255,255,0.10);
 }
 
-.db i { font-size: 19px; line-height: 1; }
-.db span { font-size: 10px; font-weight: 700; }
+/* No gray overlay on tap — subtle scale */
+.db:active {
+  transform: scale(0.95);
+}
 /* ── Color panel ────────────────────────────────── */
 .cpanel {
   position: fixed;
