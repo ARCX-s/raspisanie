@@ -260,8 +260,6 @@ input { font-family: inherit; }
 }
 .wt.on {
   background: rgba(255,255,255,.15);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255,255,255,.25);
   box-shadow: 0 2px 10px rgba(0,0,0,.09);
   color: var(--t1);
@@ -281,7 +279,6 @@ input { font-family: inherit; }
   padding: 8px 18px; border-radius: 100px; font-size: 13px; font-weight: 700;
   color: var(--t3); white-space: nowrap; transition: all .28s var(--sp);
   background: rgba(255,255,255,.15);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255,255,255,.3);
   box-shadow: 0 2px 8px rgba(0,0,0,.06);
 }
