@@ -397,7 +397,7 @@ input { font-family: inherit; }
 /* ── iOS‑style Bottom Dock ─────────────────────── */
 .dock {
   position: fixed;
-  bottom: env(safe-area-inset-bottom, 0.1px);
+  bottom: env(safe-area-inset-bottom, 0.5px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 500;
