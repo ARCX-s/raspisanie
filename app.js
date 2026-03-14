@@ -66,6 +66,7 @@ function showView(id){
   const showBack=(id==='view-sched'&&selGroup);
   $('btn-back').style.display=showBack?'flex':'none';
   $('nav-title').textContent=id==='view-sched'&&selGroup?getGroupLabel():'Xoras';
+  requestAnimationFrame(()=>requestAnimationFrame(updateSlider));
 }
 function getGroupLabel(){
   const g=D.groups.find(x=>x.id===selGroup);
@@ -290,45 +291,38 @@ window._scheduleLoaded = function() {
   }
 };
 // ── iOS‑style Bottom Dock slider ─────────────────────────
-(function(){
+function updateSlider() {
+  const dock   = document.querySelector('.dock');
+  const slider = document.querySelector('.dock-slider');
+  const active = dock && dock.querySelector('.db.on');
+  if (!dock || !slider || !active) return;
+
+  const dr = dock.getBoundingClientRect();
+  const ar = active.getBoundingClientRect();
+  slider.style.transform = `translateX(${ar.left - dr.left}px)`;
+  slider.style.width     = `${ar.width}px`;
+}
+
+(function() {
   const dock = document.querySelector('.dock');
-  if(!dock) return;
+  if (!dock) return;
+
+  // создаём слайдер с полными инлайн-стилями
   const slider = document.createElement('div');
   slider.className = 'dock-slider';
+  Object.assign(slider.style, {
+    position:   'absolute',
+    top:        '6px',
+    bottom:     '6px',
+    left:       '0',
+    width:      '0',
+    borderRadius: '22px',
+    background: 'rgba(var(--acc),0.2)',
+    transition: 'transform .28s cubic-bezier(.34,1.56,.64,1), width .28s cubic-bezier(.34,1.56,.64,1)',
+    zIndex:     '1',
+    pointerEvents: 'none',
+  });
   dock.prepend(slider);
 
-  slider.style.position = 'absolute';
-  slider.style.top = '4px';
-  slider.style.height = 'calc(100% - 8px)';
-  slider.style.borderRadius = '28px';
-  slider.style.transition = 'transform .25s cubic-bezier(.34,1.56,.64,1), width .25s cubic-bezier(.34,1.56,.64,1), background .25s';
-  slider.style.zIndex = '1';
-  slider.style.pointerEvents = 'none';
-  slider.style.background = `rgba(var(--acc),0.2)`;
-
-  const updateSlider = () => {
-    const active = dock.querySelector('.db.on');
-    if(!active) return;
-    const rect = dock.getBoundingClientRect();
-    const aRect = active.getBoundingClientRect();
-    const left = aRect.left - rect.left + 4;
-    const width = aRect.width - 8;
-    slider.style.transform = `translateX(${left}px)`;
-    slider.style.width = `${width}px`;
-    slider.style.background = `rgba(var(--acc),0.2)`;
-  };
-
-  dock.querySelectorAll('.db').forEach(btn => {
-    btn.addEventListener('click', () => {
-      dock.querySelectorAll('.db').forEach(b => b.classList.remove('on'));
-      btn.classList.add('on');
-      updateSlider();
-    });
-  });
-
   window.addEventListener('resize', updateSlider);
-  setTimeout(updateSlider, 50);
-
-  const observer = new MutationObserver(updateSlider);
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
 })();
