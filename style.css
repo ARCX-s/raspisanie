@@ -127,6 +127,9 @@ input { font-family: inherit; }
   align-items: center;
   gap: 8px;
 }
+.nav-left {
+  flex: 1;
+}
 
 /* заголовок */
 .nav-title {
