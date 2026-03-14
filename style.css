@@ -435,10 +435,6 @@ input { font-family: inherit; }
   background: rgba(var(--acc,0,122,255),0.08);
 }
 
-[data-dark] .db {
-  color: var(--t2);
-}
-
 /* активная кнопка цвет + масштаб */
 .db.on {
   color: rgba(var(--acc),1);
