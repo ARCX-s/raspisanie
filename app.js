@@ -126,7 +126,7 @@ function showView(id){
     titleEl.textContent=getGroupLabel();
   } else {
     titleEl.style.cssText='';
-    titleEl.innerHTML=`<svg viewBox="0 0 200 40" width="100%" height="36" preserveAspectRatio="xMidYMid meet"><defs><linearGradient id="gradXoras" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#0050FF"><animate attributeName="stop-color" values="#0050FF;#8856D6;#34C759;#0050FF" dur="8s" repeatCount="indefinite"/></stop><stop offset="50%" stop-color="#8856D6"><animate attributeName="stop-color" values="#8856D6;#34C759;#0050FF;#8856D6" dur="8s" repeatCount="indefinite"/></stop><stop offset="100%" stop-color="#34C759"><animate attributeName="stop-color" values="#34C759;#0050FF;#8856D6;#34C759" dur="8s" repeatCount="indefinite"/></stop></linearGradient></defs><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="17" font-weight="800" fill="url(#gradXoras)">Xoras</text></svg>`;
+    titleEl.textContent='Xoras';
   }
   requestAnimationFrame(()=>requestAnimationFrame(updateSlider));
 }
