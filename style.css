@@ -373,14 +373,14 @@ input { font-family: inherit; }
 .lico    { font-size: 11px; opacity: .45; flex-shrink: 0; }
 .lnote   { font-size: 10px; color: var(--t3); font-style: italic; margin-top: 3px; }
 
-/* ── Search ─────────────────────────────────────── */
+/* ── Search ─── */
 .search-wrap { position: relative; margin-bottom: 14px; }
 .search-ico  { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--t3); font-size: 14px; pointer-events: none; }
 .search-inp  { width: 100%; padding: 13px 16px 13px 40px; border-radius: var(--r); font-size: 15px; font-weight: 500; color: var(--t1); outline: none; transition: border-color .2s, box-shadow .2s; }
 .search-inp::placeholder { color: var(--t3); }
 .search-inp:focus { border-color: rgba(var(--acc),.5); box-shadow: 0 0 0 3px rgba(var(--acc),.1), var(--gs); }
 
-/* ── About ──────────────────────────────────────── */
+/* ── About ─── */
 .about-card  { border-radius: 20px; padding: 20px; margin-bottom: 14px; }
 .about-title { font-size: 20px; font-weight: 900; color: var(--t1); margin-bottom: 10px; letter-spacing: -.3px; }
 .about-text  { font-size: 14px; color: var(--t2); line-height: 1.65; margin-bottom: 9px; }
@@ -390,21 +390,21 @@ input { font-family: inherit; }
 .leg-item    { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--t2); font-weight: 600; }
 .leg-dot     { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
 
-/* ── Result label ───────────────────────────────── */
+/* ── Result label ─── */
 .res-lbl { font-size: 11px; font-weight: 700; color: var(--t3); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 10px; }
 
 
-/* ── iOS‑style Bottom Dock ─────────────────────── */
+/* ── Bottom Dock ─── */
 .dock {
   position: fixed;
-  bottom: env(safe-area-inset-bottom, 2.0px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 0.5px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 500;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* высота дока = высота кнопки (44px) + вертикальный паддинг (6px * 2) */
+  
   height: 56px;
   min-width: 280px;
   max-width: 500px;
@@ -414,7 +414,7 @@ input { font-family: inherit; }
   backdrop-filter: blur(28px) saturate(180%);
   -webkit-backdrop-filter: blur(28px) saturate(180%);
   box-shadow: 0 8px 32px rgba(0,0,0,.16);
-  padding: 6px 6px;   /* паддинг = отступ слайдера от края */
+  padding: 6px 6px;  
   overflow: hidden;
   transition: background .3s, box-shadow .3s;
 }
@@ -423,7 +423,7 @@ input { font-family: inherit; }
   border: 1px solid rgba(255,255,255,0.08);
 }
 
-/* слайдер — абсолютно позиционирован внутри дока */
+/* слайдер внутри дока */
 /* top/bottom совпадают с padding дока — слайдер = кнопка по высоте */
 .dock-slider {
   position: absolute;
@@ -433,7 +433,7 @@ input { font-family: inherit; }
   width: 0;
   border-radius: 22px;
   background: rgba(var(--acc), 0.18);
-  /* плавное скольжение с пружиной */
+  /* плавное скольжение как у крузака по асфальту */
   transition: transform .3s cubic-bezier(.34,1.56,.64,1),
               width    .3s cubic-bezier(.34,1.56,.64,1);
   z-index: 1;
@@ -467,7 +467,7 @@ input { font-family: inherit; }
 
 /* нажатие */
 .dock .db:active { transform: scale(.82) !important; }
-/* ── Color panel ────────────────────────────────── */
+/* ── Color panel ─── */
 .cpanel {
   position: fixed;
   bottom: calc(var(--sab) + var(--dh) + 18px);
@@ -484,7 +484,7 @@ input { font-family: inherit; }
 .sw:active { transform: scale(.78); }
 .sw.on { border-color: var(--t1); transform: scale(1.2); }
 
-/* ── Responsive ─────────────────────────────────── */
+
 @media (max-width: 390px) {
   .lname { font-size: 13px; }
   .db { padding: 7px 14px; }
