@@ -26,6 +26,7 @@ function bounce(el){if(!el)return;el.style.transform='scale(.82)';setTimeout(()=
 function setDark(v){
   dark=v;
   document.body.toggleAttribute('data-dark',dark);
+  document.documentElement.style.background = dark ? '#06060b' : '#eef0f6';
   $('btn-theme').querySelector('i').className=dark?'fa-solid fa-sun':'fa-solid fa-moon';
   ls('dark',dark?'1':'0');
 }
@@ -238,6 +239,7 @@ $('sinput').oninput=function(){
 
   // Dark
   if(lg('dark')==='1')setDark(true);
+  document.documentElement.style.background = dark ? '#06060b' : '#eef0f6';
 
   // Accent
   const ai=Math.min(parseInt(lg('acc')||'0'),ACCENTS.length-1);
