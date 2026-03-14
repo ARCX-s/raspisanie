@@ -324,127 +324,72 @@ input { font-family: inherit; }
   bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
-  height: 56px;
-  min-width: 280px;
-  max-width: 500px;
-  background: rgba(var(--acc,0,122,255),0.06);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border-radius: 28px;
+  z-index: 500;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  /* высота дока = высота кнопки (44px) + вертикальный паддинг (6px * 2) */
+  height: 56px;
+  min-width: 280px;
+  max-width: 500px;
+  border-radius: 28px;
+  background: rgba(var(--acc,0,122,255), 0.07);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
   box-shadow: 0 8px 32px rgba(0,0,0,.16);
-  z-index: 500;
-  padding: 0 8px;
+  padding: 6px 6px;   /* паддинг = отступ слайдера от края */
+  overflow: hidden;
   transition: background .3s, box-shadow .3s;
-  overflow: hidden;
 }
-
 [data-dark] .dock {
-  background: rgba(var(--acc,0,122,255),0.12);
-  box-shadow: 0 8px 32px rgba(0,0,0,.25);
+  background: rgba(var(--acc,0,122,255), 0.13);
+  box-shadow: 0 8px 32px rgba(0,0,0,.3);
 }
 
-/* плавный слайдер активной кнопки */
-.dock .db-slider {
-  position: absolute;
-  top: 8px;
-  bottom: 8px;
-  width: calc(100% / 4 - 8px); /* подстрой под кол-во кнопок */
-  background: rgba(var(--acc),0.2);
-  border-radius: 20px;
-  transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
-  z-index: 1;
-}
-
-/* ── iOS‑style Bottom Dock with sliding active background ── */
-.dock {
-  position: fixed;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 500;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 56px;
-  min-width: 280px;
-  max-width: 500px;
-  border-radius: 28px;
-  background: rgba(var(--acc,0,122,255),0.06);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  padding: 0 8px;
-  overflow: hidden;
-}
-
-/* тёмная тема */
-[data-dark] .dock {
-  background: rgba(var(--acc,0,122,255),0.12);
-  box-shadow: 0 8px 32px rgba(0,0,0,.25);
-}
-
+/* слайдер — абсолютно позиционирован внутри дока */
+/* top/bottom совпадают с padding дока — слайдер = кнопка по высоте */
 .dock-slider {
   position: absolute;
-  top: 4px;      /* немного отступ сверху плашки */
-  bottom: 4px;   /* немного отступ снизу плашки */
+  top: 6px;
+  bottom: 6px;
   left: 0;
-  width: 0;      /* JS потом устанавливает нужную ширину */
-  background: rgba(var(--acc),0.2);
-  border-radius: 20px;
-  transition: all 0.25s cubic-bezier(.34,1.56,.64,1);
+  width: 0;
+  border-radius: 22px;
+  background: rgba(var(--acc), 0.18);
+  /* плавное скольжение с пружиной */
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1),
+              width    .3s cubic-bezier(.34,1.56,.64,1);
   z-index: 1;
-  pointer-events: none; /* чтобы не мешал клику по кнопкам */
+  pointer-events: none;
 }
 
-/* кнопки dock — вытянутые овалы */
+/* кнопки дока */
 .dock .db {
   all: unset;
   flex: 1;
-  margin: 0 4px;
-  height: 40px;
-  min-width: 60px;
-  border-radius: 20px;
+  height: 44px;       /* точная высота кнопки */
+  border-radius: 22px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all 0.25s;
-  color: var(--t3,#000);
-  font-size: 12px;
   gap: 2px;
+  cursor: pointer;
+  color: var(--t3);
   position: relative;
   z-index: 2;
+  transition: color .25s, transform .22s cubic-bezier(.34,1.56,.64,1);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
+.dock .db i    { font-size: 20px; }
+.dock .db span { font-size: 10px; font-weight: 700; }
 
-.dock .db i {
-  font-size: 18px;
-  transition: all 0.25s;
-}
+/* активная кнопка */
+.dock .db.on   { color: rgba(var(--acc), 1); }
 
-.dock .db span {
-  font-size: 10px;
-  font-weight: 700;
-  transition: all 0.25s;
-}
-
-.dock .db:hover {
-  transform: scale(1.05);
-  background: rgba(var(--acc,0,122,255),0.08);
-}
-
-/* активная кнопка цвет + масштаб */
-.db.on {
-  color: rgba(var(--acc),1);
-  transform: scale(1.05);
-}
-
-/* клик / анимация */
-.db:active { transform: scale(.85) !important; }
-.db i { font-size: 20px; }
-.db span { font-size: 10px; }
+/* нажатие */
+.dock .db:active { transform: scale(.82) !important; }
 /* ── Color panel ────────────────────────────────── */
 .cpanel {
   position: fixed;
