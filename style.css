@@ -239,6 +239,7 @@ input { font-family: inherit; }
 
 /* ── Week bar ───────────────────────────────────── */
 .week-bar {
+  position: relative;
   display: flex;
   background: rgba(255,255,255,.08);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -247,7 +248,27 @@ input { font-family: inherit; }
   padding: 3px;
   margin-bottom: 14px;
 }
+.week-slider {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 0;
+  width: 0;
+  border-radius: 12px;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  transition: transform .28s cubic-bezier(.34,1.56,.64,1),
+              width    .28s cubic-bezier(.34,1.56,.64,1);
+  pointer-events: none;
+  z-index: 0;
+}
+[data-dark] .week-slider {
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+}
 .wt {
+  position: relative;
+  z-index: 1;
   flex: 1;
   padding: 9px 6px;
   border-radius: 12px;
@@ -259,25 +280,39 @@ input { font-family: inherit; }
   border: none;
 }
 .wt.on {
-  background: rgba(255,255,255,.15);
-  border: 1px solid rgba(255,255,255,.25);
-  box-shadow: 0 2px 10px rgba(0,0,0,.09);
   color: var(--t1);
   transform: scale(1.02);
 }
 [data-dark] .wt.on {
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.12);
+  color: var(--t1);
 }
 .wt:active { transform: scale(.92) !important; }
 
 /* ── Day tabs ───────────────────────────────────── */
 .day-scroll-wrap { overflow-x: auto; overflow-y: visible; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin-bottom: 14px; padding-bottom: 2px; }
 .day-scroll-wrap::-webkit-scrollbar { display: none; }
-.day-tabs { display: flex; gap: 7px; padding: 1px 1px 3px; width: max-content; }
+.day-tabs {
+  position: relative;
+  display: flex; gap: 7px; padding: 1px 1px 3px; width: max-content;
+}
+.day-slider {
+  position: absolute;
+  top: 1px;
+  bottom: 3px;
+  left: 0;
+  width: 0;
+  border-radius: 100px;
+  background: rgba(var(--acc),1);
+  box-shadow: 0 6px 18px rgba(var(--acc),.35);
+  transition: transform .28s cubic-bezier(.34,1.56,.64,1),
+              width    .28s cubic-bezier(.34,1.56,.64,1);
+  pointer-events: none;
+  z-index: 0;
+}
 .daytab {
+  position: relative; z-index: 1;
   padding: 8px 18px; border-radius: 100px; font-size: 13px; font-weight: 700;
-  color: var(--t3); white-space: nowrap; transition: all .28s var(--sp);
+  color: var(--t3); white-space: nowrap; transition: color .28s var(--sp), transform .28s var(--sp);
   background: rgba(255,255,255,.15);
   border: 1px solid rgba(255,255,255,.3);
   box-shadow: 0 2px 8px rgba(0,0,0,.06);
@@ -287,8 +322,13 @@ input { font-family: inherit; }
   border: 1px solid rgba(255,255,255,.1);
 }
 .daytab:active { transform: scale(.87) !important; }
-.daytab.on { background: rgba(var(--acc),1); border-color: rgba(var(--acc),1); color: #fff; box-shadow: 0 6px 18px rgba(var(--acc),.35); transform: scale(1.04); }
-
+.daytab.on {
+  color: #fff;
+  transform: scale(1.04);
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
 /* ── Empty ──────────────────────────────────────── */
 .empty { text-align: center; padding: 56px 20px; color: var(--t3); font-size: 14px; font-weight: 600; }
 .empty-ico { font-size: 44px; display: block; margin-bottom: 14px; animation: hfl 3s ease-in-out infinite; }
