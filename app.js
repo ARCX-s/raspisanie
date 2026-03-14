@@ -63,7 +63,6 @@ function showView(id){
   if(db)db.classList.add('on');
   $('page').scrollTop=0;
   ls('view',id);
-  // back button only on schedule view when group selected
   const showBack=(id==='view-sched'&&selGroup);
   $('btn-back').style.display=showBack?'flex':'none';
   $('nav-title').textContent=id==='view-sched'&&selGroup?getGroupLabel():'Xoras';
@@ -103,7 +102,6 @@ function buildGroups(){
 function selectGroup(id,btnEl){
   document.querySelectorAll('.gcard').forEach(c=>c.classList.remove('on'));
   btnEl.classList.add('on');selGroup=id;ls('group',id);
-  // pick first available day
   const gSched=D.schedule[id]||{};
   const avail=DAYS.filter(d=>(gSched[d]||[]).some(s=>s[selWeek]?.length));
   selDay=avail[0]||null;ls('day',selDay||'');
@@ -112,24 +110,59 @@ function selectGroup(id,btnEl){
 }
 
 // ── Week toggle ───────────────────────────────────
+function updateWeekSlider(){
+  const bar=document.querySelector('.week-bar');
+  const slider=bar&&bar.querySelector('.week-slider');
+  const active=bar&&bar.querySelector('.wt.on');
+  if(!bar||!slider||!active)return;
+  const br=bar.getBoundingClientRect();
+  const ar=active.getBoundingClientRect();
+  slider.style.transform=`translateX(${ar.left-br.left}px)`;
+  slider.style.width=`${ar.width}px`;
+}
+
 document.querySelectorAll('.wt').forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll('.wt').forEach(x=>x.classList.remove('on'));
     b.classList.add('on');selWeek=b.dataset.w;ls('week',selWeek);
     if(selGroup){
-      // keep day if still valid, else pick first available
       const gSched=D.schedule[selGroup]||{};
       const avail=DAYS.filter(d=>(gSched[d]||[]).some(s=>s[selWeek]?.length));
       if(!avail.includes(selDay))selDay=avail[0]||null;
       buildDayTabs();renderSchedule();
     }
     bounce(b);
+    requestAnimationFrame(()=>requestAnimationFrame(updateWeekSlider));
   };
 });
 
 // ── Day tabs ──────────────────────────────────────
+window._updateDaySlider = function() {
+  const bar=document.querySelector('.day-tabs');
+  const active=bar&&bar.querySelector('.daytab.on');
+  if(!bar||!active)return;
+  const slider=bar.querySelector('.day-slider');
+  if(!slider)return;
+  const br=bar.getBoundingClientRect();
+  const ar=active.getBoundingClientRect();
+  slider.style.transform=`translateX(${ar.left-br.left}px)`;
+  slider.style.width=`${ar.width}px`;
+};
+
+document.addEventListener('click',e=>{
+  if(e.target.closest('.daytab')){
+    requestAnimationFrame(()=>requestAnimationFrame(window._updateDaySlider));
+  }
+});
+
 function buildDayTabs(){
-  const bar=$('day-tabs');bar.innerHTML='';
+  const bar=$('day-tabs');
+  bar.innerHTML='';
+  // пересоздаём слайдер после очистки innerHTML
+  const ds=document.createElement('div');
+  ds.className='day-slider';
+  bar.prepend(ds);
+
   if(!selGroup)return;
   const gSched=D.schedule[selGroup]||{};
   DAYS.forEach(day=>{
@@ -147,6 +180,7 @@ function buildDayTabs(){
     };
     bar.appendChild(btn);
   });
+  setTimeout(()=>{ if(window._updateDaySlider) window._updateDaySlider(); }, 50);
 }
 
 // ── Render schedule ───────────────────────────────
@@ -232,23 +266,19 @@ $('sinput').oninput=function(){
 
 // ── Init ──────────────────────────────────────────
 (function init(){
-  // PWA service worker
   if('serviceWorker' in navigator){
     navigator.serviceWorker.register('./sw.js').catch(()=>{});
   }
 
-  // Dark
   if(lg('dark')==='1')setDark(true);
   document.documentElement.style.background = dark ? '#06060b' : '#eef0f6';
 
-  // Accent
   const ai=Math.min(parseInt(lg('acc')||'0'),ACCENTS.length-1);
   applyAccent(ACCENTS[isNaN(ai)?0:ai]);
   setTimeout(()=>{
     swBox.querySelectorAll('.sw').forEach((s,i)=>s.classList.toggle('on',i===ai));
   },0);
 
-  // Week
   if(lg('week')==='even'){
     selWeek='even';
     document.querySelectorAll('.wt').forEach(b=>b.classList.toggle('on',b.dataset.w==='even'));
@@ -256,7 +286,6 @@ $('sinput').oninput=function(){
 
   buildGroups();
 
-  // Restore group + day
   const savedGroup=lg('group');
   const savedDay=lg('day');
 
@@ -266,7 +295,6 @@ $('sinput').oninput=function(){
       document.querySelectorAll('.gcard').forEach(c=>c.classList.remove('on'));
       btn.classList.add('on');selGroup=savedGroup;
       buildDayTabs();
-      // Try restoring saved day
       if(savedDay&&document.querySelector(`.daytab[data-day="${savedDay}"]`)){
         selDay=savedDay;
         document.querySelectorAll('.daytab').forEach(t=>t.classList.toggle('on',t.dataset.day===savedDay));
@@ -277,16 +305,18 @@ $('sinput').oninput=function(){
       renderSchedule();
       showView('view-sched');
       setTimeout(updateSlider, 100);
+      setTimeout(updateWeekSlider, 120);
+      setTimeout(window._updateDaySlider, 150);
       return;
     }
   }
 
   showView('view-home');
   setTimeout(updateSlider, 100);
+  setTimeout(updateWeekSlider, 120);
 })();
 
-// ── Google Sheets live update ──────────────────────────
-// Если расписание загрузилось из Sheets уже после рендера — обновляем UI
+// ── Google Sheets live update ─────────────────────
 window._scheduleLoaded = function() {
   buildGroups();
   if (selGroup && D.schedule[selGroup]) {
@@ -294,13 +324,13 @@ window._scheduleLoaded = function() {
     if (selDay) renderSchedule();
   }
 };
-// ── iOS‑style Bottom Dock slider ─────────────────────────
+
+// ── Dock slider ───────────────────────────────────
 function updateSlider() {
   const dock   = document.querySelector('.dock');
   const slider = document.querySelector('.dock-slider');
   const active = dock && dock.querySelector('.db.on');
   if (!dock || !slider || !active) return;
-
   const dr = dock.getBoundingClientRect();
   const ar = active.getBoundingClientRect();
   slider.style.transform = `translateX(${ar.left - dr.left}px)`;
@@ -310,22 +340,29 @@ function updateSlider() {
 (function() {
   const dock = document.querySelector('.dock');
   if (!dock) return;
-
-  // создаём слайдер с полными инлайн-стилями
   const slider = document.createElement('div');
   slider.className = 'dock-slider';
   Object.assign(slider.style, {
-    position:   'absolute',
-    top:        '6px',
-    bottom:     '6px',
-    left:       '0',
-    width:      '0',
-    borderRadius: '22px',
-    transition: 'transform .28s cubic-bezier(.34,1.56,.64,1), width .28s cubic-bezier(.34,1.56,.64,1)',
-    zIndex:     '1',
+    position:      'absolute',
+    top:           '6px',
+    bottom:        '6px',
+    left:          '0',
+    width:         '0',
+    borderRadius:  '22px',
+    transition:    'transform .28s cubic-bezier(.34,1.56,.64,1), width .28s cubic-bezier(.34,1.56,.64,1)',
+    zIndex:        '1',
     pointerEvents: 'none',
   });
   dock.prepend(slider);
-
   window.addEventListener('resize', updateSlider);
+})();
+
+// ── Week slider ───────────────────────────────────
+(function() {
+  const bar = document.querySelector('.week-bar');
+  if (!bar) return;
+  const slider = document.createElement('div');
+  slider.className = 'week-slider';
+  bar.prepend(slider);
+  setTimeout(updateWeekSlider, 120);
 })();
