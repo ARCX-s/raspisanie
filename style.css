@@ -129,11 +129,12 @@ input { font-family: inherit; }
 }
 .nav-left {
   flex: 1;
+  justify-content: flex-start;
 }
 
 /* заголовок */
 .nav-title {
-  font-size: 17px;
+  font-size: 25px;
   font-weight: 800;
   background: linear-gradient(270deg, #0050FF, #8856D6, #34C759, #0050FF);
   background-size: 600% 600%;
