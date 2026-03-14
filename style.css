@@ -130,8 +130,9 @@ input { font-family: inherit; }
 .nav-left {
   flex: 1;
   justify-content: flex-start;
+  min-width: 0;
 }
-
+#btn-back { display: none; }
 /* заголовок */
 .nav-title {
   font-size: 25px;
