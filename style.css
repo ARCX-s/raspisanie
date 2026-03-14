@@ -40,21 +40,19 @@ html {
   font-family: 'Inter', -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100%;
-  overflow: hidden;   /* предотвращаем скролл на уровне html */
-  margin: 0;
-  padding: 0;
+  height: 100dvh;
+  overflow: hidden;
+  margin: 0; padding: 0;
   background: var(--bg);
 }
 body {
-  min-height: 100vh;
+  height: 100dvh;
   width: 100%;
-  margin: 0;
-  padding: 0;
-  background: var(--bg); /* фон до самого низа */
+  margin: 0; padding: 0;
+  background: var(--bg);
   color: var(--t1);
   overflow: hidden;
-  position: relative;
+  transition: background .3s, color .3s;
 }
 button { font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; user-select: none; border: none; background: none; }
 a { color: rgba(var(--acc),1); text-decoration: none; }
@@ -156,17 +154,17 @@ input { font-family: inherit; }
 
 /* ── Page (scrollable area) ─────────────────────── */
 .page {
-  position: absolute;
-  top: calc(var(--sat) + var(--nh));
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 56px);
+  left: 0; right: 0;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 80px);
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
   z-index: 1;
-  padding: 16px 14px 8px;
-  background: var(--bg); /* тоже фон для page */
+  padding: 12px 14px 20px;
+  background: transparent;
 }
 /* max-width centering */
 .page > .view { max-width: 660px; margin: 0 auto; }
@@ -321,7 +319,7 @@ input { font-family: inherit; }
 /* ── iOS‑style Bottom Dock ─────────────────────── */
 .dock {
   position: fixed;
-  bottom: 12px;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 500;
