@@ -1,4 +1,4 @@
-const CACHE='sched-v4';
+const CACHE='sched-v5';
 const FILES=['./','./index.html','./style.css','./app.js','./data.js','./manifest.json'];
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)));
