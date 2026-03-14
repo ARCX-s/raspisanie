@@ -436,7 +436,6 @@ input { font-family: inherit; }
 }
 
 [data-dark] .db {
-  background: rgba(16,16,24,0.5);
   color: var(--t2);
 }
 
