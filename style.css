@@ -247,7 +247,30 @@ input { font-family: inherit; }
   padding: 3px;
   margin-bottom: 14px;
 }
-.wt.on { background: var(--gf); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1.5px solid var(--gb); box-shadow: 0 2px 10px rgba(0,0,0,.09); color: var(--t1); transform: scale(1.02); }
+.wt {
+  flex: 1;
+  padding: 9px 6px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--t3);
+  transition: all .28s var(--sp);
+  background: transparent;
+  border: none;
+}
+.wt.on {
+  background: rgba(255,255,255,.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.25);
+  box-shadow: 0 2px 10px rgba(0,0,0,.09);
+  color: var(--t1);
+  transform: scale(1.02);
+}
+[data-dark] .wt.on {
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+}
 .wt:active { transform: scale(.92) !important; }
 
 /* ── Day tabs ───────────────────────────────────── */
