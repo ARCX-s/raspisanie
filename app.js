@@ -317,7 +317,6 @@ function updateSlider() {
     left:       '0',
     width:      '0',
     borderRadius: '22px',
-    background: 'rgba(var(--acc),0.2)',
     transition: 'transform .28s cubic-bezier(.34,1.56,.64,1), width .28s cubic-bezier(.34,1.56,.64,1)',
     zIndex:     '1',
     pointerEvents: 'none',
