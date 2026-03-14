@@ -89,7 +89,7 @@ input { font-family: inherit; }
 }
 
 [data-dark] .nav {
-  background: rgba(var(--acc,0,122,255), 0.3);
+  background: rgba(var(--acc,0,122,255), 0.05);
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 4px 24px rgba(0,0,0,.25);
 }
@@ -219,7 +219,16 @@ input { font-family: inherit; }
 /* ── Group chip ─────────────────────────────────── */
 .gcard {
   padding: 10px 20px; border-radius: 100px; font-size: 14px; font-weight: 700;
-  color: var(--t2); transition: transform .28s var(--sp), color .2s, background .2s, border-color .2s, box-shadow .2s;
+  color: var(--t2);
+  background: rgba(255,255,255,.25);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.4);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform .28s var(--sp), color .2s, background .2s, border-color .2s, box-shadow .2s;
+}
+[data-dark] .gcard {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,.1);
 }
 .gcard:active { transform: scale(.87) !important; }
 .gcard.on {
@@ -229,8 +238,17 @@ input { font-family: inherit; }
 }
 
 /* ── Week bar ───────────────────────────────────── */
-.week-bar { display: flex; background: var(--bg3); border-radius: 14px; padding: 3px; margin-bottom: 14px; }
-.wt { flex:1; padding: 9px 6px; border-radius: 12px; font-size: 13px; font-weight: 700; color: var(--t3); transition: all .28s var(--sp); }
+.week-bar {
+  display: flex;
+  background: rgba(255,255,255,.2);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 14px; padding: 3px; margin-bottom: 14px;
+}
+[data-dark] .week-bar {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+}
 .wt.on { background: var(--gf); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1.5px solid var(--gb); box-shadow: 0 2px 10px rgba(0,0,0,.09); color: var(--t1); transform: scale(1.02); }
 .wt:active { transform: scale(.92) !important; }
 
@@ -241,9 +259,14 @@ input { font-family: inherit; }
 .daytab {
   padding: 8px 18px; border-radius: 100px; font-size: 13px; font-weight: 700;
   color: var(--t3); white-space: nowrap; transition: all .28s var(--sp);
-  border: 1.5px solid var(--gb); background: var(--gf);
+  background: rgba(255,255,255,.25);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.4);
   box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+[data-dark] .daytab {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
 }
 .daytab:active { transform: scale(.87) !important; }
 .daytab.on { background: rgba(var(--acc),1); border-color: rgba(var(--acc),1); color: #fff; box-shadow: 0 6px 18px rgba(var(--acc),.35); transform: scale(1.04); }
@@ -333,7 +356,7 @@ input { font-family: inherit; }
   transition: background .3s, box-shadow .3s;
 }
 [data-dark] .dock {
-  background: rgba(var(--acc,0,122,255), 0.3);
+  background: rgba(var(--acc,0,122,255), 0.05);
   border: 1px solid rgba(255,255,255,0.08);
 }
 
