@@ -274,11 +274,13 @@ $('sinput').oninput=function(){
       }
       renderSchedule();
       showView('view-sched');
+      setTimeout(updateSlider, 100);
       return;
     }
   }
 
   showView('view-home');
+  setTimeout(updateSlider, 100);
 })();
 
 // ── Google Sheets live update ──────────────────────────
