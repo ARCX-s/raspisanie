@@ -539,16 +539,20 @@ async function loadGroupSchedule(groupName){
         // Есть пары — выбираем сегодня или ближайший день
         selDay=(today&&remainingDays.includes(today))?today:remainingDays[0];
       } else {
-        // Пар на этой неделе больше нет — переключаемся на следующую
-        loadingSchedule=false;
-        weekOffset=1;
-        updateWeekLabel();
-        await loadGroupSchedule(groupName);
-        return;
+        const nowDay=new Date().getDay();
+        const nowHour=new Date().getHours();
+        const isWeekend=nowDay===0||nowDay===6;
+        const isFridayEvening=nowDay===5&&nowHour>=21;
+        if(isWeekend||isFridayEvening){
+          loadingSchedule=false;
+          weekOffset=1;
+          updateWeekLabel();
+          await loadGroupSchedule(groupName);
+          return;
+        } else {
+          selDay=avail[0]||null;
+        }
       }
-    } else {
-      selDay=avail[0]||null;
-    }
 
     ls('day',selDay||'');
     buildDayTabs();
