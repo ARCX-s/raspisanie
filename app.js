@@ -516,6 +516,7 @@ async function loadGroupSchedule(groupName){
       const todayIdx=DAY_IDX[today]||0;
       const now=new Date();
       const nowMinutes=now.getHours()*60+now.getMinutes();
+      const nowMinutes=rawMinutes < 8*60+30 ? 0 : rawMinutes;
 
       // Дни с парами начиная с сегодня
       const remainingDays=avail.filter(d=>{
