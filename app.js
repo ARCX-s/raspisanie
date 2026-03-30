@@ -553,7 +553,9 @@ async function loadGroupSchedule(groupName){
           selDay=avail[0]||null;
         }
       }
-
+    } else {
+      selDay=avail[0]||null;
+    }
     ls('day',selDay||'');
     buildDayTabs();
     renderSchedule();
