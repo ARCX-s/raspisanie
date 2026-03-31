@@ -574,16 +574,20 @@ async function loadGroupSchedule(groupName){
 function resetSelection(){
   selGroup=null;selGroupName=null;selDay=null;
   scheduleSlots={};
-  // Очищаем все ключи xoras из localStorage
+  ls('group','');
+  ls('groupName','');
+  ls('day','');
+  ls('favorites','[]');
   Object.keys(localStorage).forEach(k=>{
-    if(k.startsWith('sp5_')||k.startsWith('xoras_')) localStorage.removeItem(k);
+    if(k.startsWith('xoras_cache_')) localStorage.removeItem(k);
   });
   const input=$('group-search-input');
   const results=$('group-search-results');
   if(input) input.value='';
   if(results) results.innerHTML='<div class="empty" style="padding:20px 0"><div class="empty-ico" style="font-size:28px">🔍</div>Введи от 2 символов</div>';
+  buildFavorites();
   showView('view-home');
-  showToast('Данные очищены');
+  showToast('Группа сброшена');
 }
 
 // ── Вкладки дней ──────────────────────────────────
